@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">AmapTraceAndNavi</string>
+    <string name="all_offline">所有城市</string>
+    <string name="download_offline">下载管理</string>
+</resources>

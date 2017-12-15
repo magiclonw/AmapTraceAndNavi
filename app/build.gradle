@@ -1,0 +1,75 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    signingConfigs {
+        config {
+            keyAlias '123456'
+            keyPassword '123456'
+            storeFile file('E:/keystore/tracenavioffline.jks')
+            storePassword '123456'
+            //MD5 : B2:1F:32:92:73:DB:C2:2C:CE:A6:36:18:21:CD:33:7B
+            //SHA1: C5:8E:8A:EA:54:04:6E:0B:77:26:7A:47:3D:38:B0:68:D7:56:C8:B6
+        }
+    }
+    compileSdkVersion 26
+    defaultConfig {
+        applicationId "com.magiclon.amaptraceandnavi"
+        minSdkVersion 15
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.config
+        ndk {
+            //设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
+            abiFilters "armeabi"
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
+        debug {
+            signingConfig signingConfigs.config
+        }
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support:design:26.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    //3D地图so及jar
+    //    compile 'com.amap.api:3dmap:latest.integration'
+    //定位功能
+    implementation 'com.amap.api:location:latest.integration'
+    //    //导航功能
+    implementation 'com.amap.api:navi-3dmap:latest.integration'
+    implementation 'pub.devrel:easypermissions:1.1.0'
+    implementation 'com.github.MagicLonW:floridftoast:1.0.0'
+    implementation 'io.reactivex:rxandroid:+'
+    implementation 'io.reactivex:rxjava:+'
+    implementation files('libs/Msc.jar')
+}
