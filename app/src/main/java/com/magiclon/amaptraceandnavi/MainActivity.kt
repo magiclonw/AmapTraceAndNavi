@@ -184,7 +184,7 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks, A
      */
     override fun onMyLocationChange(location: Location?) {
         if (location != null) {
-            Log.e("location", "${location.latitude}**${location.longitude}**$type")
+//            Log.e("location", "${location.latitude}**${location.longitude}**$type")
             if (location.latitude != 0.0 && location.longitude != 0.0) {
                 lat = location.latitude
                 lng = location.longitude

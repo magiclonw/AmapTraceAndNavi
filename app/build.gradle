@@ -1,8 +1,12 @@
+import java.text.SimpleDateFormat
+
 apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'AndResGuard'
 
 android {
     signingConfigs {
@@ -72,4 +76,53 @@ dependencies {
     implementation 'io.reactivex:rxandroid:+'
     implementation 'io.reactivex:rxjava:+'
     implementation files('libs/Msc.jar')
+}
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.tencent.mm:AndResGuard-gradle-plugin:1.2.8-RC1'
+    }
+}
+
+andResGuard {
+    // mappingFile = file("./resource_mapping.txt")
+    mappingFile = null
+    // It will be invalid when you sign apk with schemeV2
+    use7zip = true
+    useSign = true
+    // it will keep the origin path of your resources when it's true
+    keepRoot = false
+
+    whiteList = [
+            // your icon
+            "R.mipmap.ic_launcher",
+            "R.mipmap.ic_launcher_round"
+
+    ]
+    compressFilePattern = [
+            "*.png",
+            "*.jpg",
+            "*.jpeg",
+            "*.gif",
+            "resources.arsc"
+    ]
+    sevenzip {
+        artifact = 'com.tencent.mm:SevenZip:1.2.8-RC1'
+        //path = "/usr/local/bin/7za"
+    }
+
+    /**
+     * Optional: if finalApkBackupPath is null, AndResGuard will overwrite final apk
+     * to the path which assemble[Task] write to
+     **/
+    SimpleDateFormat sdf_convert = new SimpleDateFormat("yyyyMMddHHmmss")
+    finalApkBackupPath = "${project.rootDir}/AmapTraceAndNavi${sdf_convert.format(new Date())}.apk"
+
+    /**
+     * Optional: Specifies the name of the message digest algorithm to user when digesting the entries of JAR file
+     * Only works in V1signing, default value is "SHA1"
+     **/
+    digestalg = "SHA256"
 }

@@ -68,6 +68,8 @@
 
 -dontwarn com.amap.**
 -dontwarn com.autonavi.**
+-dontwarn com.iflytek.**
+-dontwarn rx.**
 #3D 地图 V5.0.0之前：
 -keep   class com.amap.api.maps.**{*;}
 -keep   class com.autonavi.amap.mapcore.*{*;}
@@ -93,3 +95,6 @@
 #导航
 -keep class com.amap.api.navi.**{*;}
 -keep class com.autonavi.**{*;}
+
+-keep class com.iflytek.**{*;}
+-keep class rx.**{*;}
