@@ -55,14 +55,16 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks, A
     var mdb: MyDb? = null
     var isAppNaving = false
     var isNativeNaving = false
-    var isStop=true
+    var isStop = true
     var uid = "asdqwe123"
     var type = ""
     var subscription: Subscription? = null
     var mProgress: ProgressDialog? = null
     var isShowDistanse = false
     private var amapTTSController: AmapTTSController? = null
-    private var p2 = LatLng(40.062, 113.31 )//故宫博物院
+    //    private var p = LatLng(40.062, 113.31 )//故宫博物院
+    private var p = LatLng(39.917337, 116.397056)//故宫博物院
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -122,10 +124,10 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks, A
         aMap?.setOnMyLocationChangeListener(this)
         tv_offlinedown.setOnClickListener { startActivity(Intent(this@MainActivity, OfflineMapActivity::class.java)) }
         tv_navi.setOnClickListener {
-            if(csl_notify.isShown){
+            if (csl_notify.isShown) {
                 traceOverlay?.remove()
                 isShowDistanse = false
-                csl_notify.visibility=View.GONE
+                csl_notify.visibility = View.GONE
             }
             selectNaviType()
         }
@@ -150,7 +152,7 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks, A
                 val intent = Intent()
                 intent.action = Intent.ACTION_VIEW
                 intent.addCategory(Intent.CATEGORY_DEFAULT)
-                val uri = Uri.parse("amapuri://route/plan/?sourceApplication=amap&dlat=${p2.latitude}&dlon=${p2.longitude}&dev=0&t=0")
+                val uri = Uri.parse("amapuri://route/plan/?sourceApplication=amap&dlat=${p.latitude}&dlon=${p.longitude}&dev=0&t=0")
                 intent.data = uri
                 startActivityForResult(intent, REQUESTCODE_CALLAPPNAVI)
                 isAppNaving = true
@@ -248,7 +250,7 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks, A
             var nativenavi = view.tv_nativenavi
             nativenavi.setOnClickListener {
                 bottomdialog.dismiss()
-                AmapNaviPage.getInstance().showRouteActivity(applicationContext, AmapNaviParams(null, null, Poi("", p2, ""), AmapNaviType.DRIVER), this@MainActivity)
+                AmapNaviPage.getInstance().showRouteActivity(applicationContext, AmapNaviParams(null, null, Poi("", p, ""), AmapNaviType.DRIVER), this@MainActivity)
             }
         }
         bottomdialog.show()
@@ -293,7 +295,7 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks, A
      */
     override fun onLocationChange(p0: AMapNaviLocation?) {
 //        Log.e("-----","${p0?.coord?.latitude}---${p0?.coord?.longitude}")
-        if(isNativeNaving){
+        if (isNativeNaving) {
             mdb?.insertLatLon(uid, type, "${p0?.coord?.latitude}", "${p0?.coord?.longitude}")
         }
 
@@ -325,7 +327,7 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks, A
      */
     override fun onStartNavi(p0: Int) {
         type = "${System.currentTimeMillis()}"
-        isNativeNaving=true
+        isNativeNaving = true
 //        Log.e("****","onStartNavi")
     }
 
@@ -335,9 +337,9 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks, A
     override fun onStopSpeaking() {
 //        Log.e("---","onStopSpeaking")
         amapTTSController?.stopSpeaking()
-        isStop=!isStop
-        if(isStop){
-            isNativeNaving=false
+        isStop = !isStop
+        if (isStop) {
+            isNativeNaving = false
             isShowDistanse = true
             showDialog("计算距离中...")
             subscription = Observable.create(Observable.OnSubscribe<Float> { action ->

@@ -82,7 +82,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.tencent.mm:AndResGuard-gradle-plugin:1.2.8-RC1'
+        classpath 'com.tencent.mm:AndResGuard-gradle-plugin:1.2.10'
     }
 }
 
@@ -109,7 +109,7 @@ andResGuard {
             "resources.arsc"
     ]
     sevenzip {
-        artifact = 'com.tencent.mm:SevenZip:1.2.8-RC1'
+        artifact = 'com.tencent.mm:SevenZip:1.2.10'
         //path = "/usr/local/bin/7za"
     }
 
@@ -124,5 +124,5 @@ andResGuard {
      * Optional: Specifies the name of the message digest algorithm to user when digesting the entries of JAR file
      * Only works in V1signing, default value is "SHA1"
      **/
-    digestalg = "SHA256"
+    digestalg = "SHA-256"
 }

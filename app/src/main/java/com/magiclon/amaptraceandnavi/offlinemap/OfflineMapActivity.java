@@ -448,7 +448,8 @@ public class OfflineMapActivity extends Activity implements
         Log.i("amap-demo", "onCheckUpdate " + name + " : " + hasNew);
         Message message = new Message();
         message.what = SHOW_MSG;
-        message.obj = "CheckUpdate " + name + " : " + hasNew;
+        String hasnewstr=(hasNew==false)?"无":"有";
+        message.obj = "检测到 " + name + " "+hasnewstr+"新数据";
         handler.sendMessage(message);
     }
 
@@ -461,7 +462,8 @@ public class OfflineMapActivity extends Activity implements
 
         Message message = new Message();
         message.what = SHOW_MSG;
-        message.obj = "onRemove " + name + " : " + success + " , " + describe;
+        String successstr=(success==false)?" 失败":" 成功";
+        message.obj = "删除 " + name + successstr+"  "+describe;
         handler.sendMessage(message);
 
     }
