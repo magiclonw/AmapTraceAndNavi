@@ -127,7 +127,7 @@ public class AmapTTSController {
 
     public void init() {
         //设置发音人
-        mTts.setParameter(SpeechConstant.VOICE_NAME, "fangfang");
+        mTts.setParameter(SpeechConstant.VOICE_NAME, "xiaoyan");
         //设置语速,值范围：[0, 100],默认值：50
         mTts.setParameter(SpeechConstant.SPEED, "55");
         //设置音量
