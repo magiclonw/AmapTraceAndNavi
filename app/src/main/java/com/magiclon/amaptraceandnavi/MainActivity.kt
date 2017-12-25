@@ -137,6 +137,7 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks, A
         btn_iknow.setOnClickListener {
             traceOverlay?.remove()
             isShowDistanse = false
+            aMap?.moveCamera(CameraUpdateFactory.zoomTo(19f))
             csl_notify.visibility = View.GONE
         }
         amapTTSController = AmapTTSController.getInstance(applicationContext)
